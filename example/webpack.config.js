@@ -39,19 +39,12 @@ module.exports = {
                                     targets: [ 'last 2 versions' ],
                                 },
                             ],
-                            [
-                                'es2015',
-                                {
-                                    modules: false,
-                                },
-                            ],
                             'react',
                             'stage-0',
                         ],
                         plugins: [
                             'syntax-dynamic-import',
                             'transform-class-properties',
-                            'transform-object-assign',
                         ],
                     },
                 },

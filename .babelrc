@@ -1,0 +1,14 @@
+{
+  "presets": [
+    ["env", {
+      "targets": [
+        "last 2 versions"
+      ]
+    }],
+    "react",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-class-properties"
+  ]
+}
