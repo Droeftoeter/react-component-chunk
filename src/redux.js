@@ -8,7 +8,7 @@ import { combineReducers } from 'redux';
  * @param reducers
  * @param initialState
  */
-function combineReducersWithStubs(reducers, initialState) {
+function combineReducersWithStubs(reducers, initialState = {}) {
     const stubs = {};
 
     Object.keys(initialState).forEach(stateKey => {
@@ -48,13 +48,15 @@ function getReducerObject(reducer) {
 }
 
 /**
- * Enhanced createStore, will add a injectReducers function.
+ * Enhanced createStore, will add a injectReducers and injectSagas function.
+ *
+ * @param sagaMiddleware
  */
-export default function injectableReducers() {
-    return createStore => (reducer, preloadedState, enhancer) => {
+export default function createInjectableStore(sagaMiddleware) {
+    return next => (reducer, preloadedState, enhancer) => {
         const reducers = getReducerObject(reducer);
 
-        const store = createStore(
+        const store = next(
             combineReducersWithStubs(reducers, preloadedState),
             preloadedState,
             enhancer,
@@ -75,9 +77,29 @@ export default function injectableReducers() {
             ));
         };
 
+        const injectSagas = injectables => {
+            invariant(
+                sagaMiddleware,
+                'Provide the sagaMiddleware as argument to the injector store enhancer to inject sagas',
+            );
+
+            if (typeof injectables === 'function') {
+                sagaMiddleware.run(injectables);
+            } else if (Array.isArray(injectables)) {
+                injectables.forEach(saga => {
+                    sagaMiddleware.run(saga);
+                });
+            } else {
+                Object.keys(injectables).forEach(key => {
+                    sagaMiddleware.run(injectables[ key ]);
+                });
+            }
+        };
+
         return {
             ...store,
             injectReducers,
+            injectSagas,
         };
     };
 }

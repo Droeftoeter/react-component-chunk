@@ -39,14 +39,16 @@ For this to work you need to have applied the `injectableReducers` createStore e
 
 ```js
 // storeInitializer.js
-import injectableReducers from '@kobalt/react-component-chunk/redux';
+import { createStore, compose } from 'redux';
+import injector from '@kobalt/react-component-chunk/redux';
   
-const finalCreateStore = injectableReducers()(createStore);
-  
-const store = finalCreateStore(
+const store = createStore(
     // Your reducers should _NOT_ be combined but a plain object. injectableReducers will do this for you.
     reducers,
-    initialState,
+    compose(
+        // ...your other enhancers
+        injector(),
+    ),
 );
 
 ```
