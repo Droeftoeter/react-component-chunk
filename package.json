@@ -1,6 +1,6 @@
 {
   "name": "@kobalt/react-component-chunk",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Library for making dynamic imports easy, with added support to make dynamically loaded[Redux Reducers and Redux-Saga Sagas easy.",
   "author": "Freek Post <freek@kobalt.blue>",
   "license": "MIT",
