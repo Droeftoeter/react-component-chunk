@@ -1,11 +1,19 @@
 # react-component-chunk
 
-Library for making dynamic imports easy, with added support to make dynamically loaded [Redux](https://github.com/reactjs/redux/) Reducers and [Redux-Saga](https://github.com/redux-saga/redux-saga) Sagas easy. 
+Library for making dynamic imports easy, with added support to make dynamically loaded [Redux](https://github.com/reactjs/redux/) Reducers and [Redux-Saga](https://github.com/redux-saga/redux-saga) Sagas easy.
 
 ## Installation
 
+NPM:
+
 ```
 npm i --save @kobalt/react-component-chunk
+```
+
+Yarn:
+
+```
+yarn add @kobalt/react-component-chunk
 ```
 
 ## Usage
@@ -14,11 +22,11 @@ Simply import `Chunkloader` from `@kobalt/react-component-chunk` and pass it a c
 
 ```js
 import Chunkloader from '@kobalt/react-component-chunk';
-  
+
 const Component = Chunkloader({
     loadable: () => import('./components/ComponentIWantInAChunk'),
 });
-  
+
 const App = () => (
     <SplittedComponent
         loader={ <Spinner /> }
@@ -41,7 +49,7 @@ For this to work you need to have applied the `injectableReducers` createStore e
 // storeInitializer.js
 import { createStore, compose } from 'redux';
 import injector from '@kobalt/react-component-chunk/redux';
-  
+
 const store = createStore(
     // Your reducers should _NOT_ be combined but a plain object. injectableReducers will do this for you.
     reducers,
@@ -64,7 +72,7 @@ import mySaga from '../sagas/mySaga';
 const ComponentIWantInAChunk = () => (
     <p>You want me in a chunk!</p>
 );
-  
+
 export default Injector({
     reducers: {
         myReducer,
@@ -82,11 +90,11 @@ export default Injector({
 ```js
 import Chunkloader from '@kobalt/react-component-chunk';
 import Spinner from './components/Spinner';
-  
+
 const SplittedComponent = Chunkloader({
     loadable: () => import('./components/ComponentIWantInAChunk'),
 });
-  
+
 const App = () => (
     <SplittedComponent
         loader={ <Spinner /> }
@@ -99,14 +107,14 @@ const App = () => (
 ```js
 import Chunkloader from '@kobalt/react-component-chunk';
 import Spinner from './components/Spinner';
-  
+
 const SplittedComponents = Chunkloader({
     loadable: [
         () => import('./components/ComponentIWantInAChunk'),
         () => import('./components/ComponentIAlsoWantInAChunk'),
     ],
 });
-  
+
 const App = () => (
     <SplittedComponents
         loader={ <Spinner /> }

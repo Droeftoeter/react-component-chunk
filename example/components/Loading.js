@@ -7,10 +7,7 @@ const Loading = ({ loading, error }) => (
 
 Loading.propTypes = {
     loading: PropTypes.bool,
-    error:   PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.bool,
-    ]),
+    error:   PropTypes.any,
 };
 
 Loading.defaultProps = {

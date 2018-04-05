@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import hoistStatics from 'hoist-non-react-statics';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import invariant from 'invariant';
 
-export default function wrap({ reducers, sagas }) {
+export default function ({ reducers, sagas }) {
     let injected = false;
-    return function wrapComponent(WrappedComponent) {
+
+    return function injector(WrappedComponent) {
         class Injector extends Component {
+
             static propTypes = {
-                innerRef: PropTypes.func,
+                forwardRef: PropTypes.object,
             };
 
             static defaultProps = {
-                innerRef: undefined,
+                forwardRef: undefined,
             };
 
             static contextTypes = {
@@ -52,9 +54,9 @@ export default function wrap({ reducers, sagas }) {
             }
 
             render() {
-                if (this.props.innerRef) {
+                if (this.props.forwardRef) {
                     return React.createElement(WrappedComponent, {
-                        ref: this.props.innerRef,
+                        ref: this.props.forwardRef,
                     });
                 }
 
@@ -62,6 +64,18 @@ export default function wrap({ reducers, sagas }) {
             }
         }
 
-        return hoistStatics(Injector, WrappedComponent);
+        hoistNonReactStatics(Injector, WrappedComponent);
+
+        function forwardRef(props, ref) {
+            return (
+                <Injector
+                    { ...props }
+                    forwardRef={ ref }
+                />
+            )
+        }
+
+        forwardRef.displayName = `Injector-${ WrappedComponent.displayName || WrappedComponent.name || 'Component' }`;
+        return React.forwardRef(forwardRef);
     };
 }

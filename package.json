@@ -1,8 +1,12 @@
 {
   "name": "@kobalt/react-component-chunk",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Library for making dynamic imports easy, with added support to make dynamically loaded[Redux Reducers and Redux-Saga Sagas easy.",
   "author": "Freek Post <freek@kobalt.blue>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Droeftoeter/react-component-chunk.git"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "node ./example/server.js",
@@ -23,7 +27,7 @@
   },
   "peerDependencies": {
     "prop-types": "^15.6.0",
-    "react": "^16.2.0"
+    "react": "^16.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -40,11 +44,13 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.7"
   },
   "optionalDependencies": {
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0"
   }
 }
